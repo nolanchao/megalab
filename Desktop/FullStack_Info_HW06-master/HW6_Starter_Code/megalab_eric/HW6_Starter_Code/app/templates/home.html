@@ -1,0 +1,58 @@
+{% extends "base.html" %}
+{% block content %}
+  <div class="container">
+    <div class="row">
+      <h1>Welcome to our awesome travel app</h1>
+      <div class= "section">
+        <a href="{{ url_for('create_trip') }}">Add a trip</a>
+      </div>
+      <div class="divider"></div>
+      <div class="section">
+        <h3>These are all of your awesome trips</h3>
+        <table class="striped">
+          <thead>
+            <tr>
+              <th data-field="first_name">Trip Name</th>
+              <th data-field="first_name">Destination</th>
+              <th data-field="last_name">Friend</th>
+              <th data-field="company">Add</th>
+            </tr>
+          </thead>
+          {% for trip in trips %}
+            <tr>
+              <td>{{ trip['trip_name'] }}</td>
+              <td>{{ trip['destination'] }}</td>
+              <td>{{ trip['friend'] }}</td>
+         
+              <!-- Add more fields to showcase on this page
+              Below is a method of adding the 'add an order' button which will route you to create_order in views.py -->
+              <td><a href="{{ url_for('create_order', value=trip['trip_id']) }}">Add a Trip</a></td>
+            </tr>
+          {% endfor %}
+        </table>
+      </div>
+      <div class="section">
+        <h3>Trips you're going on with friends (Manually Eric right now):</h3>
+        <!-- Display all the current existing order information here -->
+        <table class="striped">
+          <thead>
+            <tr>
+              <th data-field="name_of_part">Trip Name</th>
+              <th data-field="manufacturer_of_part">Destination</th>
+              <th data-field="manufacturer_of_part">Friend</th>
+            </tr>
+          </thead>
+          {% for trip in companions %}
+            <tr>
+              <td>{{ trip['trip_name'] }}</td>
+              <td>{{ trip['destination'] }}</td>
+              <td>{{ trip['friend'] }}</td>    
+              <!-- Add more fields to showcase on this page -->
+
+            </tr>
+          {% endfor %}
+        </table>
+      </div>
+    </div>
+  </div>
+{% endblock %}
