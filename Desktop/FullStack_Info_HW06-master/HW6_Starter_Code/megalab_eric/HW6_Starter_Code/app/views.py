@@ -1,13 +1,32 @@
-from flask import render_template, redirect, request
+from flask import render_template, redirect, request, session, url_for
 from app import app, models, db
 from .forms import CustomerForm, OrderForm
 # Access the models file to use SQL functions--done
 from .models import *
 
-
 @app.route('/')
 def index():
-    return redirect('/create_trip')
+    username = ''
+    if "username" in session: #check if the user is already in session, if so, direct the user to survey.html Hint: render_template with a variable
+        username = session["username"]
+        # return "Logged in as " + username + '<br>' + \
+        # "<b><a href = '/logout'> Click here to log out </a> </b>"
+        return render_template('home.html')
+    else:
+        return render_template('login.html')
+
+@app.route('/login', methods = ["POST", "GET"]) # You need to specify something here for the function to get requests
+def login():
+    # Here, you need to have logic like if there's a post request method, store the username and email from the form into
+    if request.method == "POST":
+        username = request.form["Name"]
+        email = request.form["Email"]
+    # session dictionary
+        session['username'] = request.form["Name"]
+        return redirect(url_for("index"))
+    if():
+        pass
+    return render_template('login.html')
 
 @app.route('/create_trip', methods=['GET', 'POST'])
 def create_trip():
